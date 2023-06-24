@@ -30,7 +30,7 @@
     firebase.initializeApp(firebaseConfig);
 
     const database = firebase.database();
-    const pollRef = database.ref('/event/nerd-herd'); // Admin select event here
+    const pollRef = database.ref('/event/nerd-herd'); // Adjust the reference to match your database structure
 
     let hasSubmitted = false; // Flag to track if the user has submitted
 
@@ -80,12 +80,29 @@
             return;
           }
 
-          // Here, you can capture the participant's name and their vote
-          console.log('Participant:', participantName);
-          console.log('Selected Items:', selectedItems);
+          // Construct the participant's vote object
+          const participantVote = {
+            name: participantName,
+            availableDays: selectedItems
+          };
 
-          hasSubmitted = true; // Set the flag to indicate the user has submitted
+          // Update the database with the participant's vote
+          const participantsRef = pollRef.child('participants'); // Reference to the "participants" node
+          selectedItems.forEach((day) => {
+            participantsRef.child(day).push(participantName)
+              .then(() => {
+                console.log('Participant vote submitted successfully');
+                hasSubmitted = true; // Set the flag to indicate the user has submitted
+        
+                // Replace the form with a message
+                formElement.innerHTML = '<p>Your vote has been submitted. Thank you!</p>';
+              })
+              .catch((error) => {
+                console.log('Error submitting participant vote:', error);
+              });
+          });
         });
+
       } else {
         console.log('empty poll data');
       }
