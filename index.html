@@ -5,16 +5,20 @@
   <link rel="stylesheet" type="text/css" href="voting.css">
 </head>
 <body>
-  <h1 id="pollTitle">Poll Title</h1>
+  <div class="container">
+    <h1 id="pollTitle">Poll Title</h1>
 
-  <section id="votingSection">
-    <h2>Available Days:</h2>
-    <form id="votingForm">
-      <!-- Checkboxes for available days will be dynamically added here -->
-    </form>
-  </section>
+    <section id="votingSection">
+      <h2>Available Days:</h2>
+      <form id="votingForm">
+        <!-- Checkboxes for available days will be dynamically added here -->
+        <ul id="dayList"></ul>
+      </form>
+    </section>
 
-  <button id="submitButton">Submit</button>
+    <button id="submitButton">Submit</button>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database-compat.js"></script>
   <script src="firebaseConfig.js"></script>
@@ -36,32 +40,28 @@
 
         const titleElement = document.getElementById('pollTitle');
         const formElement = document.getElementById('votingForm');
+        const dayListElement = document.getElementById('dayList');
 
         titleElement.textContent = pollTitle;
 
-        // Dynamically generate checkboxes for available days
+        // Dynamically generate list items for available days
         availableDays.forEach((day) => {
-          const checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          checkbox.id = day;
-          checkbox.value = day;
-          const label = document.createElement('label');
-          label.htmlFor = day;
-          label.textContent = day;
-
-          formElement.appendChild(checkbox);
-          formElement.appendChild(label);
-          formElement.appendChild(document.createElement('br'));
+          const listItem = document.createElement('li');
+          listItem.textContent = day;
+          listItem.addEventListener('click', () => {
+            listItem.classList.toggle('selected');
+          });
+          dayListElement.appendChild(listItem);
         });
 
         const submitButton = document.getElementById('submitButton');
 
         submitButton.addEventListener('click', () => {
-          const selectedDays = Array.from(formElement.querySelectorAll('input[type="checkbox"]:checked'))
-            .map((checkbox) => checkbox.value);
+          const selectedItems = Array.from(dayListElement.getElementsByClassName('selected'))
+            .map((item) => item.textContent);
 
           // Here, you can capture the participant's vote and perform any necessary actions
-          console.log('Selected Days:', selectedDays);
+          console.log('Selected Items:', selectedItems);
         });
       } else {
         console.log('empty poll data');
