@@ -13,6 +13,7 @@
       <form id="votingForm">
         <!-- Checkboxes for available days will be dynamically added here -->
         <ul id="dayList"></ul>
+        <input type="text" id="participantName" placeholder="Your Name">
       </form>
     </section>
 
@@ -31,6 +32,8 @@
     const database = firebase.database();
     const pollRef = database.ref('poll-demo');
 
+    let hasSubmitted = false; // Flag to track if the user has submitted
+
     pollRef.on('value', (snapshot) => {
       const pollData = snapshot.val();
 
@@ -41,6 +44,7 @@
         const titleElement = document.getElementById('pollTitle');
         const formElement = document.getElementById('votingForm');
         const dayListElement = document.getElementById('dayList');
+        const participantNameInput = document.getElementById('participantName');
 
         titleElement.textContent = pollTitle;
 
@@ -49,7 +53,9 @@
           const listItem = document.createElement('li');
           listItem.textContent = day;
           listItem.addEventListener('click', () => {
-            listItem.classList.toggle('selected');
+            if (!hasSubmitted) {
+              listItem.classList.toggle('selected');
+            }
           });
           dayListElement.appendChild(listItem);
         });
@@ -57,11 +63,27 @@
         const submitButton = document.getElementById('submitButton');
 
         submitButton.addEventListener('click', () => {
+          if (hasSubmitted) {
+            console.log('You have already submitted your vote.');
+            return;
+          }
+
           const selectedItems = Array.from(dayListElement.getElementsByClassName('selected'))
             .map((item) => item.textContent);
 
-          // Here, you can capture the participant's vote and perform any necessary actions
+          const participantName = participantNameInput.value.trim();
+
+          // Check if the participant name is entered
+          if (participantName === '') {
+            console.log('Please enter your name.');
+            return;
+          }
+
+          // Here, you can capture the participant's name and their vote
+          console.log('Participant:', participantName);
           console.log('Selected Items:', selectedItems);
+
+          hasSubmitted = true; // Set the flag to indicate the user has submitted
         });
       } else {
         console.log('empty poll data');
