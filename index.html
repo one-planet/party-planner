@@ -30,7 +30,7 @@
     firebase.initializeApp(firebaseConfig);
 
     const database = firebase.database();
-    const pollRef = database.ref('/event/nerd-herd');
+    const pollRef = database.ref('/event/nerd-herd'); // Admin select event here
 
     let hasSubmitted = false; // Flag to track if the user has submitted
 
