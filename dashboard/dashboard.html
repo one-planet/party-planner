@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dashboard.css">
+  <title>Dashboard</title>
+</head>
+
+<body>
+  <header>
+    <h1>Results</h1>
+  </header>
+  <main>
+    <table id="resultsTable">
+      <thead id="resultsTableHeader">
+        <!-- Table header will be generated dynamically -->
+      </thead>
+      <tbody id="resultsTableBody">
+        <!-- Table body will be generated dynamically -->
+      </tbody>
+    </table>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database-compat.js"></script>
+  <script src="../firebaseConfig.js"></script>
+
+  <script>
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Fetch the poll data from the database
+    const pollRef = database.ref('event/nerd-herd');
+    pollRef.on('value', (snapshot) => {
+      const pollData = snapshot.val();
+      const { options, participants } = pollData;
+
+      // Update the table header with the available days
+      const tableHeader = document.getElementById('resultsTableHeader');
+      if (tableHeader) {
+        const headerRow = `
+          <tr>
+            <th>Participant</th>
+            ${options.map((day) => `<th>${day}</th>`).join('')}
+          </tr>
+        `;
+        tableHeader.innerHTML = headerRow;
+      }
+
+      // Update the table body with participant data
+      const tableBody = document.getElementById('resultsTableBody');
+      if (tableBody) {
+        let bodyRows = '';
+        Object.entries(participants).forEach(([participant, selectedDays]) => {
+          console.log(`${participant}: ${selectedDays}`);
+          const rowCells = options.map((day) => {
+            const isAvailable = selectedDays && selectedDays.includes(day);
+            return `<td class="${isAvailable ? 'available' : 'unavailable'}">${isAvailable ? '✓' : '-'}</td>`;
+          });
+          bodyRows += `<tr><td>${participant}</td>${rowCells.join('')}</tr>`;
+        });
+        tableBody.innerHTML = bodyRows;
+      }
+    });
+  </script>
+</body>
+
+</html>

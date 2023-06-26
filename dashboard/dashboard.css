@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #1a73e8;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+main {
+  padding: 20px;
+}
+
+#resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+#resultsTable th,
+#resultsTable td {
+  padding: 10px;
+  text-align: center;
+}
+
+#resultsTable th {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+#resultsTable td {
+  background-color: #f0f0f0;
+}
+
+.available {
+  background-color: #b2dfdb;
+}
+
+.unavailable {
+  background-color: #ffccbc;
+}

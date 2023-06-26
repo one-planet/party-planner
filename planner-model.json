@@ -1,0 +1,50 @@
+{
+  "event": {
+    "grad-party": {
+      "participants": {
+        "James": ""
+      }
+    },
+    "nerd-herd": {
+      "options": [
+        "Monday",
+        "Wednesday",
+        "Friday"
+      ],
+      "participants": {
+        "clifton": [
+          "Monday"
+        ],
+        "daddy": [
+          "Monday",
+          "Wednesday",
+          "Friday"
+        ],
+        "dami": [
+          "Monday",
+          "Wednesday"
+        ],
+        "elon": [
+          "Monday",
+          "Wednesday",
+          "Friday"
+        ],
+        "nathan": [
+          "Monday",
+          "Wednesday"
+        ],
+        "thadeus": [
+          "Monday",
+          "Wednesday",
+          "Friday"
+        ]
+      },
+      "title": "Nerd Herd party"
+    }
+  },
+  "mail": {
+    "emailWaitlist": [
+      "mail@mail.com"
+    ]
+  }
+}

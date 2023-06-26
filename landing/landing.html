@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="landing.css">
+  <title>App Waitlist</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Welcome to our Event Planning App!</h1>
+    <p>Sign up for our waitlist to be the first to know about our app launch and plan exciting events with ease.</p>
+    <form id="waitlistForm">
+      <input type="email" id="emailInput" placeholder="Enter your email address" required>
+      <button type="submit">Join Waitlist</button>
+    </form>
+  </div>
+  <!-- Include the Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database-compat.js"></script>
+    <script src="../firebaseConfig.js"></script>
+
+    <!-- Include your custom submit.js script -->
+    <script src="submit.js"></script>
+
+
+
+</body>
+
+</html>
